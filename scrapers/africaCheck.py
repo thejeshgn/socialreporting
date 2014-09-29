@@ -11,7 +11,7 @@ scraper = scrapekit.Scraper('get_urls_africacheck')
 
 @scraper.task
 def scrape_index(url):
-	db = dataset.connect('sqlite:////home/thej/Documents/code/socialreporting/database/db.sqlite')
+    db = dataset.connect('sqlite:///./../database/db.sqlite')
 	db_stories_table = db['stories']
 	db_stories_data_table = db['story_data']
 

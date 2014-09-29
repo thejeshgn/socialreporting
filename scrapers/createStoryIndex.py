@@ -5,7 +5,7 @@ from urlparse import urljoin
 import lxml 
 
 scraper = scrapekit.Scraper('story_data_shared_count')
-db = dataset.connect('sqlite:////home/thej/Documents/code/socialreporting/database/db.sqlite')
+db = dataset.connect('sqlite:///./../database/db.sqlite')
 db_stories_table = db['stories']
 db_stories_data_table = db['story_data']
 
