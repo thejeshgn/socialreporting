@@ -1,0 +1,5 @@
+scrapekit
+BeautifulSoup==3.2.1
+argparse==1.2.1
+simplejson==3.3.2
+dataset
