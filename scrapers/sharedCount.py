@@ -6,12 +6,14 @@ import lxml
 import json
 
 scraper = scrapekit.Scraper('story_data_shared_count')
-db = dataset.connect('sqlite:////home/thej/Documents/code/socialreporting/database/db.sqlite')
-db_stories_table = db['stories']
-db_stories_data_table = db['story_data']
+
 
 @scraper.task
 def add_to_scraper():
+	db = dataset.connect('sqlite:////home/thej/Documents/code/socialreporting/database/db.sqlite')
+	db_stories_table = db['stories']
+	db_stories_data_table = db['story_data']
+
 	stroies_to_update = db_stories_data_table.find(status_social=0)
 	for story in stroies_to_update:
 		get_shared_count.queue(story['story_url'])
@@ -19,6 +21,9 @@ def add_to_scraper():
 
 @scraper.task
 def get_shared_count(url):
+	db = dataset.connect('sqlite:////home/thej/Documents/code/socialreporting/database/db.sqlite')
+	db_stories_table = db['stories']
+	db_stories_data_table = db['story_data']	
 	api_url='https://free.sharedcount.com?url='+str(url)+"&apikey=ded16b5b2a0280a41c929f5ac006e90c12205341"
 	data = scraper.get(api_url).json()
 	stroies_to_update = db_stories_data_table.find_one(status_social=0, story_url=url)
@@ -35,5 +40,5 @@ def get_shared_count(url):
 
 
 if __name__ == '__main__':
-	add_to_scraper.run()
-	#add_to_scraper.queue().wait()
+	#get_shared_count.run()
+	add_to_scraper.queue().wait()
